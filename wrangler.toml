@@ -1,0 +1,4 @@
+name = "quotex-api"
+main = "quotex.py"
+compatibility_date = "2024-10-01"
+compatibility_flags = ["python_workers"]
