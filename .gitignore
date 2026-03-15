@@ -1,0 +1,18 @@
+# PyCharm
+.idea/
+*.iml
+
+# Wrangler cache
+.wrangler/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# System files
+.DS_Store
+Thumbs.db
