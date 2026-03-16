@@ -1,5 +1,6 @@
 // quotex.js - Complete Trading Signals API for JUMMUU BOT
-// Deploy on Cloudflare Workers - JavaScript Version (Guaranteed to work!)
+// FORCED UTC+6 (Bangladesh Time) Version
+// Deploy on Cloudflare Workers - JavaScript Version
 
 // ============================================
 // Complete signal database for ALL currency pairs
@@ -1162,35 +1163,42 @@ const SIGNAL_DATABASE = {
 };
 
 // ============================================
+// Timezone Conversion Function for UTC+6
+// ============================================
+function convertToUTC(timeStr) {
+    // Parse hours and minutes from time string (format: "HH:MM")
+    const [hours, minutes] = timeStr.split(':').map(Number);
+
+    // UTC+6 means local time is 6 hours ahead of UTC
+    // To get UTC time, subtract 6 hours from local time
+    let utcHours = hours - 6;
+    let utcMinutes = minutes;
+
+    // Handle day boundary crossing
+    if (utcHours < 0) {
+        utcHours += 24; // Previous day
+    }
+
+    // Return as a sortable string
+    return `${utcHours.toString().padStart(2, '0')}:${utcMinutes.toString().padStart(2, '0')}`;
+}
+
+// ============================================
 // Helper Functions
 // ============================================
-
 function formatPairName(pair) {
     return pair.replace('_', '-').toUpperCase();
 }
 
-function getPairInfo(pair) {
-    const pairInfo = {
-        'USDBDT-OTC': { country: 'Bangladesh', currency: 'Bangladeshi Taka' },
-        'USDINR-OTC': { country: 'India', currency: 'Indian Rupee' },
-        'USDPKR-OTC': { country: 'Pakistan', currency: 'Pakistani Rupee' },
-        'USDBRL-OTC': { country: 'Brazil', currency: 'Brazilian Real' },
-        'USDDZD-OTC': { country: 'Algeria', currency: 'Algerian Dinar' },
-        'USDARS-OTC': { country: 'Argentina', currency: 'Argentine Peso' },
-        'USDCOP-OTC': { country: 'Colombia', currency: 'Colombian Peso' },
-        'USDCAD-OTC': { country: 'Canada', currency: 'Canadian Dollar' },
-        'USDEGP-OTC': { country: 'Egypt', currency: 'Egyptian Pound' },
-        'USDIDR-OTC': { country: 'Indonesia', currency: 'Indonesian Rupiah' },
-        'USDMXN-OTC': { country: 'Mexico', currency: 'Mexican Peso' },
-        'USDPHP-OTC': { country: 'Philippines', currency: 'Philippine Peso' },
-        'USDCHF-OTC': { country: 'Switzerland', currency: 'Swiss Franc' },
-        'USDNGN-OTC': { country: 'Nigeria', currency: 'Nigerian Naira' }
-    };
-    return pairInfo[pair] || { country: 'Unknown', currency: 'Unknown' };
-}
-
 function filterSignalsByTime(signals, startTime, endTime) {
-    return signals.filter(s => s.time >= startTime && s.time <= endTime);
+    // Convert user's UTC+6 times to UTC for comparison
+    const startTimeUTC = convertToUTC(startTime);
+    const endTimeUTC = convertToUTC(endTime);
+
+    return signals.filter(s => {
+        const signalTimeUTC = convertToUTC(s.time);
+        return signalTimeUTC >= startTimeUTC && signalTimeUTC <= endTimeUTC;
+    });
 }
 
 function getSignalStats(pair) {
@@ -1213,10 +1221,6 @@ function getSignalStats(pair) {
 // ============================================
 // Main Worker Handler
 // ============================================
-
-// quotex.js - Trading Signals API for JUMMUU BOT
-// FORCED UTC+6 (Bangladesh Time) Version
-
 export default {
     async fetch(request) {
         // CORS headers
@@ -1243,15 +1247,15 @@ export default {
         try {
             const url = new URL(request.url);
 
-            // Get parameters (these are assumed to be in UTC+6)
+            // Get parameters
             let pair = url.searchParams.get('pairs') || url.searchParams.get('pair') || 'USDBDT_otc';
-            const startTimeParam = url.searchParams.get('start_time') || '00:00';
-            const endTimeParam = url.searchParams.get('end_time') || '23:59';
+            const startTime = url.searchParams.get('start_time') || '00:00';
+            const endTime = url.searchParams.get('end_time') || '23:59';
 
             // Format pair name
             const formattedPair = formatPairName(pair);
 
-            // Get signals from database
+            // Get signals
             const signals = SIGNAL_DATABASE[formattedPair] || [];
 
             if (!signals || signals.length === 0) {
@@ -1262,34 +1266,23 @@ export default {
                 }), { status: 404, headers });
             }
 
-            // Convert UTC+6 times to UTC for internal comparison
-            // UTC+6 is 6 hours behind UTC
-            const startTimeUTC = convertToUTC(startTimeParam);
-            const endTimeUTC = convertToUTC(endTimeParam);
+            // Filter by time (using UTC+6 conversion)
+            const filteredSignals = filterSignalsByTime(signals, startTime, endTime);
 
-            // Filter signals - convert each signal's time to UTC for comparison
-            const filteredSignals = signals.filter(s => {
-                const signalTimeUTC = convertToUTC(s.time);
-                return signalTimeUTC >= startTimeUTC && signalTimeUTC <= endTimeUTC;
-            });
-
-            // Get additional info
-            const pairInfo = getPairInfo(formattedPair);
+            // Get signal stats
             const stats = getSignalStats(formattedPair);
 
-            // Prepare response with UTC+6 context
+            // Prepare response with UTC+6 timezone info
             const responseData = {
                 status: 'success',
                 info: {
                     provider: 'JUMMUU BOT',
-                    contact: '@JUMMUUKK',
+                    contact: '@jummuubot',
                     system: 'Operational',
                     pair: formattedPair,
-                    country: pairInfo.country,
-                    currency: pairInfo.currency,
                     timezone: 'UTC+6 (Bangladesh Time)',
                     totalSignals: filteredSignals.length,
-                    timeRange: `${startTimeParam} - ${endTimeParam} (UTC+6)`,
+                    timeRange: `${startTime} - ${endTime}`,
                     statistics: {
                         totalInDatabase: stats.total,
                         calls: stats.calls,
@@ -1318,25 +1311,3 @@ export default {
         }
     }
 };
-
-// ============================================
-// Timezone Conversion Function
-// ============================================
-
-function convertToUTC(timeStr) {
-    // Parse hours and minutes from time string (format: "HH:MM")
-    const [hours, minutes] = timeStr.split(':').map(Number);
-
-    // UTC+6 means local time is 6 hours ahead of UTC
-    // To get UTC time, subtract 6 hours from local time
-    let utcHours = hours - 6;
-    let utcMinutes = minutes;
-
-    // Handle day boundary crossing
-    if (utcHours < 0) {
-        utcHours += 24; // Previous day
-    }
-
-    // Return as a sortable string
-    return `${utcHours.toString().padStart(2, '0')}:${utcMinutes.toString().padStart(2, '0')}`;
-}
