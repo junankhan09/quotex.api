@@ -1271,7 +1271,7 @@ export default {
                 status: 'success',
                 info: {
                     provider: 'JUMMUU BOT',
-                    contact: '@JUMMUUKK',
+                    contact: '@jummuubot',
                     system: 'Operational',
                     pair: formattedPair,
                     country: pairInfo.country,
