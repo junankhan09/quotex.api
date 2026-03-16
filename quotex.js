@@ -1191,7 +1191,12 @@ function formatPairName(pair) {
 }
 
 function filterSignalsByTime(signals, startTime, endTime) {
-    // Convert user's UTC+6 times to UTC for comparison
+    // For full day range (00:00-23:59), return all signals without conversion
+    if (startTime === '00:00' && endTime === '23:59') {
+        return signals;
+    }
+
+    // Convert user's UTC+6 times to UTC for comparison only when filtering
     const startTimeUTC = convertToUTC(startTime);
     const endTimeUTC = convertToUTC(endTime);
 
