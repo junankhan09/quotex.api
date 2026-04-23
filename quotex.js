@@ -7303,6 +7303,7 @@ const SIGNAL_DATABASE = {
 ],
 
 // BTCUSD-OTC Signals (60+ signals)
+
     'BTCUSD-OTC': [
   { "asset": "BTC/USD-OTC", "time": "00:00", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
   { "asset": "BTC/USD-OTC", "time": "00:05", "direction": "PUT", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
@@ -10668,12 +10669,9 @@ const SIGNAL_DATABASE = {
   { "asset": "PEPUSD-OTC", "time": "23:30", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
   { "asset": "PEPUSD-OTC", "time": "23:42", "direction": "PUT", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
   { "asset": "PEPUSD-OTC", "time": "23:50", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
-  { "asset": "PEPUSD-OTC", "time": "24:00", "direction": "PUT", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
+  { "asset": "PEPUSD-OTC", "time": "24:00", "direction": "PUT", "duration": "M1", "martingale": "MG1", "accuracy": "95%" }
   ],
 
-
-    // ARBUSD-OTC Signals (60+ signals)
-    'ARBUSD-OTC':
 
 
    // USDNGN-OTC Signals (60+ signals)
