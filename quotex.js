@@ -31,7 +31,7 @@ const SIGNAL_DATABASE = {
         { "asset": "USDBDT-OTC", "time": "01:46", "direction": "PUT", "duration": "M1", "martingale": "MG1", "accuracy": "99%" },
         { "asset": "USDBDT-OTC", "time": "01:51", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "93%" },
         { "asset": "USDBDT-OTC", "time": "01:58", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
-        { "asset": "USDBDT-OTC", "time": "O2:02", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "97%" },
+        { "asset": "USDBDT-OTC", "time": "02:02", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "97%" },
         { "asset": "USDBDT-OTC", "time": "02:08", "direction": "PUT", "duration": "M1", "martingale": "MG1", "accuracy": "90%" },
         { "asset": "USDBDT-OTC", "time": "02:18", "direction": "PUT", "duration": "M1", "martingale": "MG1", "accuracy": "97%" },
         { "asset": "USDBDT-OTC", "time": "02:24", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
@@ -9093,7 +9093,6 @@ const SIGNAL_DATABASE = {
   { "asset": "CRLUSD-OTC", "time": "14:50", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
   { "asset": "CRLUSD-OTC", "time": "14:58", "direction": "PUT", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
   { "asset": "CRLUSD-OTC", "time": "15:00", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
-[
   { "asset": "CRLUSD-OTC", "time": "15:00", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
   { "asset": "CRLUSD-OTC", "time": "15:05", "direction": "PUT", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
   { "asset": "CRLUSD-OTC", "time": "15:07", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
@@ -9214,7 +9213,7 @@ const SIGNAL_DATABASE = {
   { "asset": "CRLUSD-OTC", "time": "23:48", "direction": "PUT", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
   { "asset": "CRLUSD-OTC", "time": "23:53", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
   { "asset": "CRLUSD-OTC", "time": "23:57", "direction": "PUT", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
-  { "asset": "CRLUSD-OTC", "time": "24:00", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "95%" },
+  { "asset": "CRLUSD-OTC", "time": "24:00", "direction": "CALL", "duration": "M1", "martingale": "MG1", "accuracy": "95%" }
   ],
 
 // BNBUSD-OTC Signals (60+ signals)
