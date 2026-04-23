@@ -1,2 +1,0 @@
-# No external dependencies needed for Cloudflare Workers Python
-# The environment is pre-configured with standard library
